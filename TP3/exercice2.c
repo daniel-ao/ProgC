@@ -1,79 +1,69 @@
 #include <stdio.h>
 #include <stdlib.h>
-size_t longueur(const char *chaine) {
-    size_t length = 0;
 
-    while (chaine[length] != '\0') {
-        length++;
-    }
-    return length;
+int longueur (char s[]) {
+  int i = 0;
+  for (i = 0; s[i] != '\0'; i++);
+  return i;
 }
-
-char* copieChaine(const char *chaine) {
-
-    size_t length = longueur(chaine);
-    size_t i;
-    char *copiedString = (char *)malloc((length + 1) * sizeof(char));
-
-    for (i = 0; i <= length; i++) {
-        copiedString[i] = chaine[i];
-    }
-
-    return copiedString;
+char *copieChaine (char s[]) {
+  int i = 0;
+  char *copie = malloc((longueur(s)+1) * sizeof(char));
+  for (i = 0; s[i] != '\0'; i++) {
+    copie[i] = s[i];
+  }
+  copie[i] = '\0';
+  return copie;
 }
-
 void question1() {
-    const char *testString = "Hello, World!";
+  char *testString = "Hello, World!";
 
-    printf("Length of the string: %lu\n", (unsigned long)longueur(testString));
+  printf("Length of the string: %d\n",longueur(testString));
 }
 
-char* concatener(const char *chaine1, const char *chaine2) {
-
-    char *copiedString1 = copieChaine(chaine1);
-    size_t i;
-
-    size_t length2 = longueur(chaine2);
-
-
-    char *concatenatedString = (char *)realloc(copiedString1, (length2 + longueur(copiedString1) + 1) * sizeof(char));
-
-    for (i = 0; i <= length2; i++) {
-        concatenatedString[longueur(copiedString1) + i] = chaine2[i];
-    }
-
-    return concatenatedString;
+char *concateneChaines (char s1[], char s2[]) {
+  int i = 0;
+  int j = 0;
+  char *concat = malloc((longueur(s1) + longueur(s2) + 1) * sizeof(char));
+  for (i = 0; s1[i] != '\0'; i++) {
+    concat[i] = s1[i];
+  }
+  for (j = 0; s2[j] != '\0'; j++) {
+    concat[i + j] = s2[j];
+  }
+  concat[i + j] = '\0';
+  return concat;
 }
+
 
 void testConcatener() {
-    const char *string1 = "Hello, ";
-    const char *string2 = "World!";
-
-    char *result = concatener(string1, string2);
-
-    printf("Concatenated: %s\n", result);
-
-    free(result);
+  char *string1 = "Hello, ";
+  char *string2 = "World!";
+  char *result = concateneChaines(string1, string2);
+  printf("String 1: %s\n", string1);
+  printf("String 2: %s\n", string2);
+  printf("Concatenation of String 1 and String 2: %s\n", result);
+  free(result);
 }
 
 
 void testCopieChaine() {
-    const char *originalString = "Hello, World!";
-    size_t originalLength = longueur(originalString);
-    char *copiedString = copieChaine(originalString);
-    printf("Original Length: %lu\n", (unsigned long)originalLength);
-    printf("Original: %s\n", originalString);
-    printf("Copied:   %s\n", copiedString);
-    printf("Copied Length: %lu\n", (unsigned long)longueur(copiedString));
+  char *originalString = "Hello, World!";
+  int originalLength = longueur(originalString);
+  char *copiedString = copieChaine(originalString);
+  printf("Original Length: %lu\n", (unsigned long)originalLength);
+  printf("Original: %s\n", originalString);
+  printf("Copied:   %s\n", copiedString);
+  printf("Copied Length: %lu\n", (unsigned long)longueur(copiedString));
 
-    free(copiedString);
+  free(copiedString);
 }
 
 int main() {
 
-   /* testCopieChaine();*/
+  testCopieChaine();
   testConcatener();
 
 
-    return 0;
+  return 0;
 }
